@@ -1,0 +1,54 @@
+1)	Write a test to validate that the team has only 4 foreign players?
+
+import static io.restassured.Restassured.*;
+public class TeamHasOnly4FP {
+ @Test
+public void ResponseValidation1()
+{
+//prerequisites
+baseURI = "http://localhost";
+port = 8084;
+int expForPlayers = 4;
+
+//action
+Response resp = when().get("/team");
+			
+//validation
+List<String>  actData = resp.jsonPath().get(".player.country");
+Int actForPlayers =0;
+for(String s : actData){
+if(!s.equalsIgnoreCase(“india”)){
+actForPlayers++;
+}     
+}
+Assert.assertEquals(actForPlayers, expForPlayers);
+System.out.println(“Validated Successfully that the team has only 4 foriegn players");
+}
+
+
+2)Write a test to validate that the team has at least one wicketkeeper?
+
+import static io.restassured.Restassured.*;
+public class TeamHasOnly4FP {
+@Test
+public void ResponseValidation2()
+{
+//prerequisites
+baseURI = "http://localhost";
+port = 8084;
+int expRole= 1;
+		
+//action
+Response resp = when().get("/team");
+			
+//validation
+List<String>  actData = resp.jsonPath().get(".player.role");
+int actRole =0;
+for(String s : actData){
+if(s.equalsIgnoreCase(“wicketkeeper”)){
+actRole ++;
+}     
+}
+Assert.assertEquals(expRole, actRole);
+System.out.println(“Validated Successfully that the team has only 1 wicketkeeper");
+}
